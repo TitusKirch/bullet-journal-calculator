@@ -34,6 +34,7 @@
     pages: number;
   };
   const form = ref<{
+    jounalPageAmount;
     year: number;
     startMonth: string;
     firstPagePosition: 'left' | 'right';
@@ -44,6 +45,7 @@
     yearlySections: YearlySection[];
     monthlySections: MonthlySection[];
   }>({
+    jounalPageAmount: 203,
     year: new Date().getFullYear(),
     startMonth: 'february',
     firstPagePosition: 'left',
@@ -148,6 +150,9 @@
     // yearly sections
     dividerBefore = true;
     for (const section of form.value.yearlySections) {
+      if (!section.pages) {
+        continue;
+      }
       pages.push({
         start: page,
         end: page + section.pages - 1,
@@ -162,6 +167,9 @@
     for (const month of monthsForResult.value) {
       dividerBefore = true;
       for (const section of form.value.monthlySections) {
+        if (!section.pages) {
+          continue;
+        }
         pages.push({
           start: page,
           end: page + section.pages - 1,
@@ -292,6 +300,13 @@
           <h3 class="text-lg font-semibold">
             {{ $t('pageCountCalculator.form.general.title') }}
           </h3>
+          <UFormGroup
+            name="jounalPageAmount"
+            :label="$t('pageCountCalculator.form.jounalPageAmount.label')"
+          >
+            <UInput v-model="form.jounalPageAmount" type="number" />
+          </UFormGroup>
+
           <UFormGroup name="year" :label="$t('pageCountCalculator.form.year.label')">
             <USelectMenu
               v-model="form.year"
@@ -433,7 +448,44 @@
         <h2 class="text-xl font-semibold mb-6 mt-12">
           {{ $t('pageCountCalculator.form.result.title') }}
         </h2>
-        <UContainer>
+        <UContainer class="space-y-10">
+          <UAlert
+            :color="
+              formResult.pages[formResult.pages.length - 1]?.end > form.jounalPageAmount
+                ? 'red'
+                : 'green'
+            "
+            :icon="
+              formResult.pages[formResult.pages.length - 1]?.end > form.jounalPageAmount
+                ? 'i-heroicons-exclamation-circle'
+                : 'i-heroicons-check'
+            "
+            :title="
+              formResult.pages[formResult.pages.length - 1]?.end > form.jounalPageAmount
+                ? $t('pageCountCalculator.form.result.alert.maxPages.title', {
+                    pages: formResult.pages[formResult.pages.length - 1]?.end,
+                    maxPages: form.jounalPageAmount,
+                    missingPages:
+                      formResult.pages[formResult.pages.length - 1]?.end - form.jounalPageAmount,
+                  })
+                : $t('pageCountCalculator.form.result.alert.enoughPages.title', {
+                    pages: formResult.pages[formResult.pages.length - 1]?.end,
+                    maxPages: form.jounalPageAmount,
+                    pagesLeft:
+                      form.jounalPageAmount - formResult.pages[formResult.pages.length - 1]?.end,
+                  })
+            "
+          />
+
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="col-span-1 font-semibold">
+              {{ $t('pageCountCalculator.form.result.pages.title') }}
+            </div>
+            <div class="col-span-2 font-semibold">
+              {{ $t('pageCountCalculator.form.result.content.title') }}
+            </div>
+          </div>
+
           <div v-for="page in formResult.pages" class="grid md:grid-cols-3 gap-4">
             <div v-if="page.dividerBefore" class="col-span-3 border-b-2 border-gray-200 mt-4" />
             <div class="col-span-1">

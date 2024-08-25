@@ -60,6 +60,9 @@
       "addMonthlyCalendar": {
         "label": "Add Monthly Calendar"
       },
+      "excludeMonthsForMonthlyCalendar": {
+        "label": "Exclude Months for Monthly Calendar"
+      },
       "firstPagePosition": {
         "label": "First Page Position",
         "option": {
@@ -73,6 +76,9 @@
       },
       "general": {
         "title": "General"
+      },
+      "jounalPageAmount": {
+        "label": "Journal Page Amount"
       },
       "monthlyCalendarLayout": {
         "label": "Monthly Calendar Layout",
@@ -98,6 +104,17 @@
         "title": "Monthly Sections"
       },
       "result": {
+        "alert": {
+          "enoughPages": {
+            "title": "You use {pages} pages from {maxPages} pages. You have {pagesLeft} pages left."
+          },
+          "maxPages": {
+            "title": "The maximum amount of pages is {maxPages} and you have {pages} pages. You need {missingPages} more pages."
+          }
+        },
+        "content": {
+          "title": "Content"
+        },
         "legendePage": {
           "title": "Legend Page"
         },
@@ -105,10 +122,11 @@
           "week": {
             "title": "Week"
           }
-        }
-      },
-      "excludeMonthsForMonthlyCalendar": {
-        "label": "Exclude Months for Monthly Calendar"
+        },
+        "pages": {
+          "title": "Pages"
+        },
+        "title": "Result"
       },
       "startMonth": {
         "label": "Start Month"
@@ -116,6 +134,21 @@
       "title": "Result",
       "year": {
         "label": "Year"
+      },
+      "yearlySections": {
+        "name": {
+          "label": "Name"
+        },
+        "add": {
+          "label": "Add Yearly Section"
+        },
+        "pages": {
+          "label": "Pages"
+        },
+        "remove": {
+          "label": "Remove Yearly Section"
+        },
+        "title": "Yearly Sections"
       }
     },
     "header": {
@@ -126,29 +159,14 @@
         "label": "Copy/Paste your data here"
       }
     },
-    "title": "Form",
-    "yearlySections": {
-      "name": {
-        "label": "Name"
+    "tabs": {
+      "form": {
+        "label": "Form"
       },
-      "add": {
-        "label": "Add Yearly Section"
-      },
-      "pages": {
-        "label": "Pages"
-      },
-      "remove": {
-        "label": "Remove Yearly Section"
-      },
-      "title": "Yearly Sections"
-    }
-  },
-  "tabs": {
-    "form": {
-      "label": "Form"
+      "importExport": {
+        "label": "Import/Export"
+      }
     },
-    "importExport": {
-      "label": "Import/Export"
-    }
+    "title": "Form"
   }
 }
