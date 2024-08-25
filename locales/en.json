@@ -1,0 +1,151 @@
+{
+  "app": {
+    "meta": {
+      "fallbackTitle": "Bullet Journal Calculator",
+      "title": "{title} - Bullet Journal Calculator"
+    }
+  },
+  "locale": {
+    "de-DE": "German (Germany)",
+    "en-GB": "English (UK)"
+  },
+  "month": {
+    "april": {
+      "long": "April"
+    },
+    "august": {
+      "long": "August"
+    },
+    "december": {
+      "long": "December"
+    },
+    "february": {
+      "long": "February"
+    },
+    "january": {
+      "long": "January"
+    },
+    "july": {
+      "long": "July"
+    },
+    "june": {
+      "long": "June"
+    },
+    "march": {
+      "long": "March"
+    },
+    "may": {
+      "long": "May"
+    },
+    "november": {
+      "long": "November"
+    },
+    "october": {
+      "long": "October"
+    },
+    "september": {
+      "long": "September"
+    }
+  },
+  "pageCountCalculator": {
+    "footer": {
+      "imprint": {
+        "label": "Imprint"
+      }
+    },
+    "form": {
+      "addLegendPage": {
+        "label": "Add Legend Page"
+      },
+      "addMonthlyCalendar": {
+        "label": "Add Monthly Calendar"
+      },
+      "firstPagePosition": {
+        "label": "First Page Position",
+        "option": {
+          "left": {
+            "label": "Left"
+          },
+          "right": {
+            "label": "Right"
+          }
+        }
+      },
+      "general": {
+        "title": "General"
+      },
+      "monthlyCalendarLayout": {
+        "label": "Monthly Calendar Layout",
+        "option": {
+          "8gridPerWeek": {
+            "label": "8 Grid per Week"
+          }
+        }
+      },
+      "monthlySections": {
+        "name": {
+          "label": "Name"
+        },
+        "add": {
+          "label": "Add Monthly Section"
+        },
+        "pages": {
+          "label": "Pages"
+        },
+        "remove": {
+          "label": "Remove Monthly Section"
+        },
+        "title": "Monthly Sections"
+      },
+      "result": {
+        "legendePage": {
+          "title": "Legend Page"
+        },
+        "monthlyCalendar": {
+          "week": {
+            "title": "Week"
+          }
+        }
+      },
+      "startMonth": {
+        "label": "Start Month"
+      },
+      "title": "Result",
+      "year": {
+        "label": "Year"
+      }
+    },
+    "header": {
+      "title": "Page Count Calculator"
+    },
+    "importExport": {
+      "textarea": {
+        "label": "Copy/Paste your data here"
+      }
+    },
+    "title": "Form",
+    "yearlySections": {
+      "name": {
+        "label": "Name"
+      },
+      "add": {
+        "label": "Add Yearly Section"
+      },
+      "pages": {
+        "label": "Pages"
+      },
+      "remove": {
+        "label": "Remove Yearly Section"
+      },
+      "title": "Yearly Sections"
+    }
+  },
+  "tabs": {
+    "form": {
+      "label": "Form"
+    },
+    "importExport": {
+      "label": "Import/Export"
+    }
+  }
+}
