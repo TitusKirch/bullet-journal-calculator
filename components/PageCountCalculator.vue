@@ -39,7 +39,7 @@
     firstPagePosition: 'left' | 'right';
     addLegendPage: boolean;
     addMonthlyCalendar: boolean;
-    excludeMonthForMonthlyCalendar: string[];
+    excludeMonthsForMonthlyCalendar: string[];
     monthlyCalendarLayout?: '8gridPerWeek';
     yearlySections: YearlySection[];
     monthlySections: MonthlySection[];
@@ -49,7 +49,7 @@
     firstPagePosition: 'left',
     addLegendPage: true,
     addMonthlyCalendar: true,
-    excludeMonthForMonthlyCalendar: ['february'],
+    excludeMonthsForMonthlyCalendar: ['february'],
     monthlyCalendarLayout: '8gridPerWeek',
     yearlySections: [],
     monthlySections: [],
@@ -181,7 +181,7 @@
 
       if (
         form.value.addMonthlyCalendar &&
-        !form.value.excludeMonthForMonthlyCalendar.includes(month)
+        !form.value.excludeMonthsForMonthlyCalendar.includes(month)
       ) {
         // get first and last day of month
         const firstDay = new Date(form.value.year, months.indexOf(month), 1);
@@ -351,11 +351,11 @@
 
           <UFormGroup
             v-if="form.addMonthlyCalendar"
-            name="excludeMonthForMonthlyCalendar"
-            :label="$t('pageCountCalculator.form.excludeMonthForMonthlyCalendar.label')"
+            name="excludeMonthsForMonthlyCalendar"
+            :label="$t('pageCountCalculator.form.excludeMonthsForMonthlyCalendar.label')"
           >
             <USelectMenu
-              v-model="form.excludeMonthForMonthlyCalendar"
+              v-model="form.excludeMonthsForMonthlyCalendar"
               :options="startMonthOptions"
               value-attribute="value"
               multiple
