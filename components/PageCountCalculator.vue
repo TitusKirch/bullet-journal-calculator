@@ -93,11 +93,11 @@
     form.value.monthlySections.splice(index, 1);
   };
   addYearlySection({
-    name: '???',
+    name: 'Bucket-Liste',
     pages: 2,
   });
   addYearlySection({
-    name: '???',
+    name: 'To-Do-Liste',
     pages: 2,
   });
   addYearlySection({
