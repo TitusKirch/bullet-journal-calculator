@@ -112,11 +112,7 @@
     pages: 2,
   });
   addYearlySectionBeforeMonthlySections({
-    name: 'Platzhalter (Bücher)',
-    pages: 2,
-  });
-  addYearlySectionBeforeMonthlySections({
-    name: 'Platzhalter I',
+    name: 'Platzhalter I (Bücher)',
     pages: 2,
   });
   addYearlySectionBeforeMonthlySections({
@@ -129,6 +125,10 @@
   });
   addYearlySectionBeforeMonthlySections({
     name: 'Platzhalter IV',
+    pages: 2,
+  });
+  addYearlySectionBeforeMonthlySections({
+    name: 'Platzhalter V',
     pages: 2,
   });
   addMonthlySection({
