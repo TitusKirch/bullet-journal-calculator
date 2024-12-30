@@ -52,7 +52,7 @@
     firstPagePosition: 'left',
     addLegendPage: true,
     addMonthlyCalendar: true,
-    excludeMonthsForMonthlyCalendar: ['february'],
+    excludeMonthsForMonthlyCalendar: [],
     monthlyCalendarLayout: '8gridPerWeek',
     yearlySectionsBeforeMonthlySections: [],
     monthlySections: [],
@@ -579,7 +579,10 @@
               <span
                 :class="{
                   'text-orange-500 font-semibold':
-                    page.start % 2 !== 0 && form.firstPagePosition === 'left' && page.start !== 1,
+                    page.start % 2 !== 0 &&
+                    page.start !== page.end &&
+                    form.firstPagePosition === 'left' &&
+                    page.start !== 1,
                 }"
               >
                 {{ page.start }}
