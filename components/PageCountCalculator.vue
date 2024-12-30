@@ -34,7 +34,7 @@
     pages: number;
   };
   const form = ref<{
-    jounalPageAmount;
+    jounalPageAmount: number;
     year: number;
     startMonth: string;
     firstPagePosition: 'left' | 'right';
@@ -42,19 +42,21 @@
     addMonthlyCalendar: boolean;
     excludeMonthsForMonthlyCalendar: string[];
     monthlyCalendarLayout?: '8gridPerWeek';
-    yearlySections: YearlySection[];
+    yearlySectionsBeforeMonthlySections: YearlySection[];
     monthlySections: MonthlySection[];
+    yearlySectionsAfterMonthlySections: YearlySection[];
   }>({
     jounalPageAmount: 203,
-    year: new Date().getFullYear(),
-    startMonth: 'february',
+    year: 2025,
+    startMonth: 'january',
     firstPagePosition: 'left',
     addLegendPage: true,
     addMonthlyCalendar: true,
     excludeMonthsForMonthlyCalendar: ['february'],
     monthlyCalendarLayout: '8gridPerWeek',
-    yearlySections: [],
+    yearlySectionsBeforeMonthlySections: [],
     monthlySections: [],
+    yearlySectionsAfterMonthlySections: [],
   });
   const yearOptions = Array.from({ length: 20 }, (_, index) => ({
     value: new Date().getFullYear() + index - 10,
@@ -74,14 +76,14 @@
       label: t('pageCountCalculator.form.monthlyCalendarLayout.option.8gridPerWeek.label'),
     },
   ];
-  const yearlySectionsAmount = ref<number>(0);
-  const addYearlySection = ({ name = '', pages = 2 } = {}) => {
-    form.value.yearlySections.push({ name, pages });
-    yearlySectionsAmount.value++;
+  const yearlySectionsBeforeMonthlySectionsAmount = ref<number>(0);
+  const addYearlySectionBeforeMonthlySections = ({ name = '', pages = 2 } = {}) => {
+    form.value.yearlySectionsBeforeMonthlySections.push({ name, pages });
+    yearlySectionsBeforeMonthlySectionsAmount.value++;
   };
-  const removeYearlySection = ({ index }: { index: number }) => {
-    yearlySectionsAmount.value--;
-    form.value.yearlySections.splice(index, 1);
+  const removeYearlySectionBeforeMonthlySections = ({ index }: { index: number }) => {
+    yearlySectionsBeforeMonthlySectionsAmount.value--;
+    form.value.yearlySectionsBeforeMonthlySections.splice(index, 1);
   };
   const monthlySectionsAmount = ref<number>(0);
   const addMonthlySection = ({ name = '', pages = 2 } = {}) => {
@@ -92,15 +94,24 @@
     monthlySectionsAmount.value--;
     form.value.monthlySections.splice(index, 1);
   };
-  addYearlySection({
+  const yearlySectionsAfterMonthlySectionsAmount = ref<number>(0);
+  const addYearlySectionAfterMonthlySections = ({ name = '', pages = 2 } = {}) => {
+    form.value.yearlySectionsAfterMonthlySections.push({ name, pages });
+    yearlySectionsAfterMonthlySectionsAmount.value++;
+  };
+  const removeYearlySectionAfterMonthlySections = ({ index }: { index: number }) => {
+    yearlySectionsAfterMonthlySectionsAmount.value--;
+    form.value.yearlySectionsAfterMonthlySections.splice(index, 1);
+  };
+  addYearlySectionBeforeMonthlySections({
     name: 'Bucket-Liste',
     pages: 2,
   });
-  addYearlySection({
+  addYearlySectionBeforeMonthlySections({
     name: 'To-Do-Liste',
     pages: 2,
   });
-  addYearlySection({
+  addYearlySectionBeforeMonthlySections({
     name: 'Bücher',
     pages: 2,
   });
@@ -114,6 +125,10 @@
   });
   addMonthlySection({
     name: 'Habit Tracker',
+    pages: 2,
+  });
+  addYearlySectionAfterMonthlySections({
+    name: `To-Do-Liste ${form.value.year + 1}`,
     pages: 2,
   });
 
@@ -147,9 +162,9 @@
       page++;
     }
 
-    // yearly sections
+    // yearly sections before monthly sections
     dividerBefore = true;
-    for (const section of form.value.yearlySections) {
+    for (const section of form.value.yearlySectionsBeforeMonthlySections) {
       if (!section.pages) {
         continue;
       }
@@ -240,6 +255,22 @@
       }
     }
 
+    // yearly sections after monthly sections
+    dividerBefore = true;
+    for (const section of form.value.yearlySectionsAfterMonthlySections) {
+      if (!section.pages) {
+        continue;
+      }
+      pages.push({
+        start: page,
+        end: page + section.pages - 1,
+        title: section.name,
+        dividerBefore,
+      });
+      page += section.pages;
+      dividerBefore = false;
+    }
+
     return { pages };
   });
 
@@ -265,7 +296,10 @@
     try {
       const parsedValue = JSON.parse(jsonValue.value);
       form.value = parsedValue;
-      yearlySectionsAmount.value = parsedValue.yearlySections.length;
+      yearlySectionsBeforeMonthlySectionsAmount.value =
+        parsedValue.yearlySectionsBeforeMonthlySections.length;
+      yearlySectionsAfterMonthlySectionsAmount.value =
+        parsedValue.yearlySectionsAfterMonthlySections.length;
     } catch (error) {
       console.error(error);
     }
@@ -380,34 +414,44 @@
 
           <div class="space-y-4">
             <h3 class="text-lg font-semibold">
-              {{ $t('pageCountCalculator.form.yearlySections.title') }}
+              {{ $t('pageCountCalculator.form.yearlySectionsBeforeMonthlySections.title') }}
             </h3>
-            <div v-for="index in yearlySectionsAmount" class="grid md:grid-cols-9 gap-4">
+            <div
+              v-for="index in yearlySectionsBeforeMonthlySectionsAmount"
+              class="grid md:grid-cols-9 gap-4"
+            >
               <UFormGroup
-                :name="'yearlySections[' + (index - 1) + '].name'"
-                :label="$t('pageCountCalculator.form.yearlySections.name.label')"
+                :name="'yearlySectionsBeforeMonthlySections[' + (index - 1) + '].name'"
+                :label="
+                  $t('pageCountCalculator.form.yearlySectionsBeforeMonthlySections.name.label')
+                "
                 class="col-span-4"
               >
-                <UInput v-model="form.yearlySections[index - 1].name" />
+                <UInput v-model="form.yearlySectionsBeforeMonthlySections[index - 1].name" />
               </UFormGroup>
               <UFormGroup
-                :name="'yearlySections[' + (index - 1) + '].pages'"
-                :label="$t('pageCountCalculator.form.yearlySections.pages.label')"
+                :name="'yearlySectionsBeforeMonthlySections[' + (index - 1) + '].pages'"
+                :label="
+                  $t('pageCountCalculator.form.yearlySectionsBeforeMonthlySections.pages.label')
+                "
                 class="col-span-4"
               >
-                <UInput v-model="form.yearlySections[index - 1].pages" type="number" />
+                <UInput
+                  v-model="form.yearlySectionsBeforeMonthlySections[index - 1].pages"
+                  type="number"
+                />
               </UFormGroup>
               <div class="col-span-1 flex items-end justify-end">
                 <UButton
-                  @click="removeYearlySection({ index: index - 1 })"
+                  @click="removeYearlySectionBeforeMonthlySections({ index: index - 1 })"
                   color="red"
                   icon="i-heroicons-trash"
                 />
               </div>
             </div>
 
-            <UButton @click="addYearlySection">
-              {{ $t('pageCountCalculator.form.yearlySections.add.label') }}
+            <UButton @click="addYearlySectionBeforeMonthlySections">
+              {{ $t('pageCountCalculator.form.yearlySectionsBeforeMonthlySections.add.label') }}
             </UButton>
           </div>
 
@@ -441,6 +485,49 @@
 
             <UButton @click="addMonthlySection">
               {{ $t('pageCountCalculator.form.monthlySections.add.label') }}
+            </UButton>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-lg font-semibold">
+              {{ $t('pageCountCalculator.form.yearlySectionsAfterMonthlySections.title') }}
+            </h3>
+            <div
+              v-for="index in yearlySectionsAfterMonthlySectionsAmount"
+              class="grid md:grid-cols-9 gap-4"
+            >
+              <UFormGroup
+                :name="'yearlySectionsAfterMonthlySections[' + (index - 1) + '].name'"
+                :label="
+                  $t('pageCountCalculator.form.yearlySectionsAfterMonthlySections.name.label')
+                "
+                class="col-span-4"
+              >
+                <UInput v-model="form.yearlySectionsAfterMonthlySections[index - 1].name" />
+              </UFormGroup>
+              <UFormGroup
+                :name="'yearlySectionsAfterMonthlySections[' + (index - 1) + '].pages'"
+                :label="
+                  $t('pageCountCalculator.form.yearlySectionsAfterMonthlySections.pages.label')
+                "
+                class="col-span-4"
+              >
+                <UInput
+                  v-model="form.yearlySectionsAfterMonthlySections[index - 1].pages"
+                  type="number"
+                />
+              </UFormGroup>
+              <div class="col-span-1 flex items-end justify-end">
+                <UButton
+                  @click="removeYearlySectionAfterMonthlySections({ index: index - 1 })"
+                  color="red"
+                  icon="i-heroicons-trash"
+                />
+              </div>
+            </div>
+
+            <UButton @click="addYearlySectionAfterMonthlySections">
+              {{ $t('pageCountCalculator.form.yearlySectionsAfterMonthlySections.add.label') }}
             </UButton>
           </div>
         </UForm>
@@ -489,10 +576,22 @@
           <div v-for="page in formResult.pages" class="grid md:grid-cols-3 gap-4">
             <div v-if="page.dividerBefore" class="col-span-3 border-b-2 border-gray-200 mt-4" />
             <div class="col-span-1">
-              <span class="font-semibold">{{ page.start }}</span>
+              <span
+                :class="{
+                  'text-orange-500 font-semibold':
+                    page.start % 2 !== 0 && form.firstPagePosition === 'left' && page.start !== 1,
+                }"
+              >
+                {{ page.start }}
+              </span>
               <template v-if="page.start !== page.end">
                 <span>-</span>
-                <span class="font-semibold">{{ page.end }}</span>
+                <span
+                  :class="{
+                    'text-orange-500 font-semibold': page.end % 2 === 0,
+                  }"
+                  >{{ page.end }}</span
+                >
               </template>
             </div>
             <div class="col-span-2">{{ page.title }}</div>

@@ -135,20 +135,35 @@
       "year": {
         "label": "Year"
       },
-      "yearlySections": {
+      "yearlySectionsAfterMonthlySections": {
         "name": {
           "label": "Name"
         },
         "add": {
-          "label": "Add Yearly Section"
+          "label": "Add Yearly Section After Monthly Sections"
         },
         "pages": {
           "label": "Pages"
         },
         "remove": {
-          "label": "Remove Yearly Section"
+          "label": "Remove Yearly Section After Monthly Sections"
         },
-        "title": "Yearly Sections"
+        "title": "Yearly Sections After Monthly Sections"
+      },
+      "yearlySectionsBeforeMonthlySections": {
+        "name": {
+          "label": "Name"
+        },
+        "add": {
+          "label": "Add Yearly Section Before Monthly Sections"
+        },
+        "pages": {
+          "label": "Pages"
+        },
+        "remove": {
+          "label": "Remove Yearly Section Before Monthly Sections"
+        },
+        "title": "Yearly Sections Before Monthly Sections"
       }
     },
     "header": {
